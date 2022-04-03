@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+<section class="content">
+  <div class="main">
+    <div class="main_header">
+      <img src="/static/img/twitter.png"/>
+      <h1>Home</h1>
+    </div>
+  </div>
+  <section class="post_form">
+    <form action="" method="POST" enctype="multipart/form-data">
+        <div class="my_icon">
+          <img src="/static/img/sample-icon.jpg"/>
+      </div>
+      {%csrf_token%}
+      <input id="name" type="text" name="name" placeholder="Your name"/>
+      <textarea name="body" placeholder="What's Happinig?" maxlength="140px" required></textarea>
+      <input class=" file" type="file" name="image"/>
+      <button class="tweet" type="submit">Tweet</button>
+    </form>
+  </section>
+  <section class="posts">
+    <ul>
+      {% for post in posts %}
+      <li>
+        <img class="menu_icon js-menu-icon" src="{% static 'img/menu.png' %}"/>
+        <div class="menu">
+          <a href="/delete/{{ post.id }}/">delete</a><br>
+          <a href="/update/{{ post.id }}/">edit</a>
+        </div>
+        <div class="logo">
+          <img src="{% static 'img/sample-icon.jpg' %}" style="border-radius: 50%;"/>
+        </div>
+        <div class="name_body">
+          <div class="name">{{ post.name }}</div>         
+          <div class="datetime">{{ post.created_at }}</div>
+          <p>{{ post.body }}</p>
+          {% if post.image.url %}
+          <img class="image" src="{{ post.image.url }}" style="width: 300px; height: 300px;"/>
+          {% endif %}
+          <div>
+            <a href="/like/{{ post.id }}/">
+            <img src="{% static 'img/thumb-up.png'%}" style="width: 30px;"/>
+            </a>
+            {{ post.like_count }}
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script src="{% static 'js/posts.js' %}"></script>
+</section>
+{% endblock %}

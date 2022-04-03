@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+<section class="content">
+  <div class="main">
+    <div class="main_header">
+      <img src="{% static 'img/twitter.png' %}" />
+      <h1>Edit</h1>
+    </div>
+  </div>
+  <section class="post_for">
+    <form action="/update/{{post.id}}/" method="POST" enctype="multipart/form-data">
+      {%csrf_token%}
+      <div class="logo">
+        <img src="{% static 'img/sample-icon.jpg' %}"/>
+      </div>
+      <input class="text" type="text" name="name" value="{{ post.name }}"required/>
+      <textarea class="texted" type="texted" name="body" required>
+{{ post.body }}</textarea
+      >
+      {% if post.image.url %}
+      <img src="{{post.image.url}}" class="image2" /><br />
+      {% endif %}
+
+      <input class="file" type="file" name="image" value="{{post.image.url}}"/>
+
+      <div>
+        <button class="update" type="submit" value="update">Update</button>
+        <button class="cancel" type="cancel"><a href="/" style="color: white;">Cancel</a></button>
+      </div>
+    </form>
+  </section>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"
+  ></script>
+  <script src="{% static 'js/posts.js/' %}"></script>
+  {% endblock %}
+</section>
